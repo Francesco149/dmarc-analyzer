@@ -43,7 +43,9 @@ dmarc-analyzer/
 │   ├── style.css
 │   └── app.js
 ├── package.json          # jszip + fontsource deps for build
-├── flake.nix             # packages + NixOS module
+├── flake.nix
+├── module.nix            # NixOS module
+├── packages.nix          # packages
 ├── dmarc-scanner.py
 └── dmarc-server.py
 ```
@@ -78,7 +80,7 @@ python3 build.py
 Add the flake input to your system flake:
 
 ```nix
-inputs.dmarc.url = "git+file:///etc/nixos/modules/dmarc-analyzer";
+inputs.dmarc.url = "github:Francesco149/dmarc-analyzer";
 ```
 
 Import the module and configure:
