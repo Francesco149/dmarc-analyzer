@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DMARC Analyzer</title>
+{{FONTS}}
+<style>
+{{STYLE}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="var(--accent)" opacity="0.15"/>
+      <circle cx="12" cy="12" r="5" fill="var(--accent)" opacity="0.35"/>
+      <circle cx="12" cy="12" r="2.5" fill="var(--accent)"/>
+    </svg>
+    <span class="logo-text">DMARC Analyzer <span>/ headpats.uk</span></span>
+  </div>
+  <div class="hdr-right">
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">&#9790; Dark</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <p class="sidebar-title">Reports</p>
+      <button class="upload-btn" onclick="document.getElementById('file-input').click()">&#43; Upload report</button>
+      <input type="file" id="file-input" accept=".xml,.zip" multiple>
+    </div>
+    <div class="feed-list" id="feed-list">
+      <div class="feed-empty" id="feed-empty">
+        No reports loaded.<br><br>
+        <a onclick="document.getElementById('file-input').click()">Upload a .zip or .xml</a> or drop files anywhere,
+        or drop a <code>reports.json</code> feed file.
+        <br><br>
+        When self-hosted, reports load automatically from <code>/data/reports.json</code>.
+      </div>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+    <div class="welcome" id="welcome">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style="margin-bottom:16px;opacity:0.3">
+        <circle cx="20" cy="20" r="18" stroke="var(--text)" stroke-width="1.5"/>
+        <path d="M13 20h14M20 13v14" stroke="var(--text)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <h2>Select a report</h2>
+      <p>Choose a report from the sidebar, or upload a .zip or .xml file from any DMARC provider.</p>
+    </div>
+    <div class="detail" id="detail" style="display:none"></div>
+  </main>
+</div>
+
+<div class="drop-overlay" id="drop-overlay">
+  <div class="drop-box">
+    <div style="font-size:32px;opacity:0.5">&#128196;</div>
+    <p>Drop DMARC report</p>
+    <span>.zip, .xml, or reports.json</span>
+  </div>
+</div>
+
+<script>
+{{JSZIP}}
+</script>
+<script>
+{{SCRIPT}}
+</script>
+</body>
+</html>

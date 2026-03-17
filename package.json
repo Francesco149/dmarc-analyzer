@@ -1,0 +1,9 @@
+{
+  "name": "dmarc-analyzer",
+  "private": true,
+  "dependencies": {
+    "@fontsource/dm-mono": "*",
+    "@fontsource/dm-sans": "*",
+    "jszip": "*"
+  }
+}
