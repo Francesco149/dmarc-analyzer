@@ -1,6 +1,7 @@
 # dmarc-analyzer
 
-> [!WARNING] Vibe coded — use at your own risk.
+> [!WARNING]
+> Vibe coded — use at your own risk.
 >
 > This is an ad hoc tool I put together for my own setup. It is not robust, not
 > production-hardened, and not intended for general use. It works for me. It may
