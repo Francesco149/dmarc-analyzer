@@ -172,7 +172,11 @@ def extract_xml_from_attachment(part):
         return payload
 
     # Gzipped XML
-    if fname_lower.endswith(".xml.gz") or fname_lower.endswith(".gz"):
+    if (
+        fname_lower.endswith(".xml.gz") or 
+        fname_lower.endswith(".gz") or 
+        ctype in ("application/gzip", "application/x-gzip")
+    ):
         try:
             return gzip.decompress(payload)
         except Exception:
@@ -230,8 +234,14 @@ def scan_maildir(path):
     """Yield (msg_id, full_message) for Maildir messages with DMARC-like subjects.
     Uses a two-pass approach: read headers only first, then re-parse the full
     message only when the subject matches — keeps memory flat."""
-    header_parser = email.parser.BytesHeaderParser()
-    mdir = mailbox.Maildir(path, factory=None, create=False)
+    # Add policy to the header parser
+    header_parser = email.parser.BytesHeaderParser(policy=email.policy.default)
+
+    # Custom factory to parse full messages with modern default policy
+    def _factory(f):
+        return email.message_from_binary_file(f, policy=email.policy.default)
+
+    mdir = mailbox.Maildir(path, factory=_factory, create=False)
     for key in mdir.keys():
         # Pass 1: headers only — cheap, doesn't load attachments
         with mdir.get_file(key) as f:
@@ -245,8 +255,12 @@ def scan_maildir(path):
 
 def scan_mbox(path):
     """Yield (msg_id, full_message) for mbox messages with DMARC-like subjects."""
-    header_parser = email.parser.BytesHeaderParser()
-    mbox = mailbox.mbox(path, factory=None, create=False)
+    header_parser = email.parser.BytesHeaderParser(policy=email.policy.default)
+
+    def _factory(f):
+        return email.message_from_binary_file(f, policy=email.policy.default)
+
+    mbox = mailbox.mbox(path, factory=_factory, create=False)
     for key in mbox.keys():
         with mbox.get_file(key) as f:
             headers = header_parser.parse(f)
